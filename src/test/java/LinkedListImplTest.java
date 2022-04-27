@@ -7,7 +7,7 @@ class LinkedListImplTest {
     LinkedList<Integer> linkedList;
 
     @BeforeEach
-    void initializeTest(){
+    void initializeTest() {
         linkedList = new LinkedListImpl<>();
 
     }
@@ -44,7 +44,7 @@ class LinkedListImplTest {
     }
 
     @Test
-    void testAddNodeAsElement(){
+    void testAddNodeAsElement() {
         linkedList.add(1);
 
         ListNode<Integer> node = new LinkedListImpl.Node<>(2);
@@ -60,7 +60,7 @@ class LinkedListImplTest {
     }
 
     @Test
-    void testThrowingExceptionWhenCycleDetected(){
+    void testThrowingExceptionWhenCycleDetected() {
         linkedList.add(1);
 
         ListNode<Integer> node = new LinkedListImpl.Node<>(2);

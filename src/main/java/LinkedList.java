@@ -1,6 +1,6 @@
 public interface LinkedList<T> {
 
-    void add(T i);
+    void add(T data);
 
     void add(ListNode<T> newNode);
 

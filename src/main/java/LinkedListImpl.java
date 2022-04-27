@@ -14,30 +14,31 @@ public class LinkedListImpl<T> implements LinkedList<T> {
         this.head = new Node<>();
     }
 
-    public LinkedListImpl(T i) {
-        this.head = new Node<>(i);
+    public LinkedListImpl(T data) {
+        this.head = new Node<>(data);
         this.size = 1;
     }
 
     public LinkedListImpl(ListNode<T> node) {
 
-        if(hasCycle(node))
+        if (hasCycle(node)) {
             throw new LinkedListCycleException("Cycle detected");
+        }
 
         this.head = node;
 
         int sizeNode = 1;
         ListNode<T> tail = node;
         while (tail.next() != null) {
-            sizeNode ++;
+            sizeNode++;
             tail = tail.next();
         }
         this.size = sizeNode;
     }
 
     @Override
-    public void add(T i) {
-        add(new Node<>(i));
+    public void add(T data) {
+        add(new Node<>(data));
     }
 
     @Override
@@ -46,29 +47,31 @@ public class LinkedListImpl<T> implements LinkedList<T> {
             throw new NullPointerException("passed element is null");
         }
 
-        if(hasCycle(newNode))
+        if (hasCycle(newNode)) {
             throw new LinkedListCycleException("Cycle detected");
+        }
 
 
         int sizeNode = 1;
         ListNode<T> tail = newNode;
         while (tail.next() != null) {
-            sizeNode ++;
+            sizeNode++;
             tail = tail.next();
         }
 
         if (head.isEmpty()) {
             head = newNode;
         } else {
-            ListNode<T> tail1 = head;
-            while (tail1.next() != null) {
-                tail1 = tail1.next();
+            tail = head;
+            while (tail.next() != null) {
+                tail = tail.next();
             }
-            tail1.setNext(newNode);
+            tail.setNext(newNode);
         }
 
-        if(hasCycle(newNode))
+        if (hasCycle(newNode)) {
             throw new LinkedListCycleException("Cycle detected");
+        }
 
         size += sizeNode;
     }
@@ -85,46 +88,46 @@ public class LinkedListImpl<T> implements LinkedList<T> {
 
     @Override
     public String toString() {
-        StringBuilder lista = new StringBuilder();
-        lista.append("LinkedList{");
+        StringBuilder sb = new StringBuilder();
+        sb.append("LinkedList{");
 
         if (head.isEmpty()) {
-            lista.append('}');
-            return lista.toString();
+            sb.append('}');
+            return sb.toString();
         }
 
-        lista.append('[');
-        lista.append(head.data());
+        sb.append('[');
+        sb.append(head.data());
 
         ListNode<T> nextNode = head;
         while (nextNode.next() != null) {
-            lista.append(", ");
-            lista.append(nextNode.next().data());
+            sb.append(", ");
+            sb.append(nextNode.next().data());
             nextNode = nextNode.next();
         }
 
-        lista.append("]}");
-        return lista.toString();
+        sb.append("]}");
+        return sb.toString();
     }
 
-    boolean hasCycle ( ListNode<T> node )
-    {
+    boolean hasCycle(ListNode<T> node) {
         if (node == null || node.isEmpty()) {
             throw new NullPointerException("passed element is null");
         }
 
-        Set<ListNode<T>> treeSet = new HashSet<>();
+        Set<ListNode<T>> visitedNodes = new HashSet<>();
 
         ListNode<T> nextNode = node;
         while (nextNode.next() != null) {
-            if(treeSet.contains(nextNode))
+            if (visitedNodes.contains(nextNode)) {
                 return true;
+            }
 
-            treeSet.add(nextNode);
+            visitedNodes.add(nextNode);
             nextNode = nextNode.next();
 
         }
-        return  false;
+        return false;
     }
 
     public static class Node<T> implements ListNode<T> {
@@ -152,7 +155,7 @@ public class LinkedListImpl<T> implements LinkedList<T> {
         @Override
         public ListNode<T> setNext(ListNode<T> next) {
             this.next = next;
-            return this.next;
+            return this;
         }
 
         @Override
@@ -161,7 +164,5 @@ public class LinkedListImpl<T> implements LinkedList<T> {
         }
 
     }
-
-
 
 }
